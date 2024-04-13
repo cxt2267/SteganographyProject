@@ -1,0 +1,72 @@
+from flask import Blueprint, render_template, redirect, url_for, request
+from DB import DB
+import Steno
+
+bp = Blueprint('bp',__name__)
+
+db = DB()
+
+@bp.route('/nav')
+def nav():
+    return render_template('nav.html')
+
+@bp.route('/')
+def home():    
+    return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="false", login="false")
+
+
+@bp.route('/login', methods=["POST","GET"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        pswd = request.form["pswd"]
+        usr = db.checkUser(email, pswd)
+        if usr == "user not found":
+            return render_template('login.html', error=usr)
+        return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="false", login="true")
+    return render_template('login.html')
+
+@bp.route('/logout')
+def logout():
+    db.setUser("")
+    return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="true", login="false")
+
+@bp.route('/register', methods=["POST","GET"])
+def register():
+    if request.method == "POST":
+        fname = request.form["fname"]
+        lname = request.form["lname"]
+        email = request.form["email"]
+        pswd = request.form["pswd"]
+        usr = db.regUser(fname, lname, email, pswd)
+        if usr == "email already in use":
+            return render_template('register.html', error=usr)
+        return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="false", login="true")
+    return render_template('register.html')
+
+@bp.route('/account')
+def account():
+    return render_template('account.html')
+
+@bp.route('/upload/<user>', methods=["POST","GET"])
+def upload(user):
+    if request.method == "POST":
+        post_info = {
+            "carrier": request.files['carrier'],
+            "message": request.files['message'],
+            "start_bit": request.form['start_bit'],
+            "period": request.form['period'],
+            "op_mode": request.form['op_mode'],
+            "post_name": request.form['post_name'],
+            "user": int(user)
+        }   
+        result = Steno.createPost(post_info)
+        if(result != "success"):
+            return render_template('upload.html', error=result)
+        return render_template('myposts.html')
+    return render_template('upload.html')
+
+@bp.route('/myposts')
+def myposts():
+    return render_template('myposts.html', posts=DB.userPosts())
+

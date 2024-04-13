@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+    <div id="nav" class="nav"></div>
+    <div class="login-box">
+        <form action="#" method="post">
+            <h1>Register</h1>
+            <div class="input-con">
+                <input type="text" name="fname" placeholder="First Name" maxlength="255" required>
+            </div>
+            <div class="input-con">
+                <input type="text" name="lname" placeholder="Last Name" maxlength="255" required>
+            </div>
+            <div class="input-con">
+                <input type="email" name="email" placeholder="Email" maxlength="255" required>
+            </div>
+            <div class="input-con">
+                <input type="password" name="pswd" placeholder="Password" minlength="8" maxlength="255" required>
+            </div>
+            <button type="submit" class="sub-button">Register</button>
+            <div class="register-link">
+                <p>Already have an account? <a href="/login">Login</a></p>
+            </div>
+            <div class="error">{{error}}</div>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $("#nav").load("/nav");
+        });
+    </script>
+</body>
+</html>

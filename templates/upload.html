@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div id="nav" class="nav"></div>
+    <div class="input-box">
+        <form action="#" method="post" enctype="multipart/form-data">
+            <h1>Upload</h1>
+            <div class="form-group" id="carrier_div">
+                <input type="file" name="carrier" class="form-control-file" id="carrier" required>
+            </div>
+            <div class="form-group" id="message_div">
+                <input type="file" name="message" class="form-control-file" id="message" required>
+            </div>
+            <div class="input-con">
+                <input type="text" name="op_mode" placeholder="Mode: single(1) or multiple(2)" maxlength="255" required>
+            </div>
+            <div class="input-con">
+                <input type="text" name="start_bit" placeholder="Starting Bit" maxlength="255" required>
+            </div>
+            <div class="input-con">
+                <input type="text" name="period" placeholder="Periodicity: e.g. 8 or 8,12,16" maxlength="255" required>
+            </div>
+            <div class="input-con">
+                <input type="text" name="post_name" placeholder="Post Name (alphanumerics, no spaces)" maxlength="255" required>
+            </div>
+            <button type="submit" class="sub-button">Submit</button>
+            <div class="error" id="error">{{error}}</div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function checkUser() {
+            if(localStorage.getItem("user") === null) {
+                window.location.href = "/login";
+                return
+            } else {
+                //var user = JSON.parse(localStorage.getItem("user"));
+                return
+            }
+        }
+        checkUser();
+        $(function(){
+            $("#nav").load("/nav");
+        });
+    </script>
+</body>
+</html>
