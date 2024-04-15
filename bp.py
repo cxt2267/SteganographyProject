@@ -1,10 +1,19 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify
 from DB import DB
 import Steno
 
 bp = Blueprint('bp',__name__)
 
 db = DB()
+
+@bp.route('/all-posts')
+def all_posts():
+    return jsonify(posts=db.allPosts())
+
+@bp.route('/my-posts/<user>')
+def my_posts(user):
+    posts = db.userPosts(user)
+    return jsonify(posts=posts)
 
 @bp.route('/nav')
 def nav():
@@ -14,7 +23,6 @@ def nav():
 def home():    
     return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="false", login="false")
 
-
 @bp.route('/login', methods=["POST","GET"])
 def login():
     if request.method == "POST":
@@ -23,13 +31,13 @@ def login():
         usr = db.checkUser(email, pswd)
         if usr == "user not found":
             return render_template('login.html', error=usr)
-        return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="false", login="true")
+        return render_template('index.html', user=db.getUser(), logout="false", login="true")
     return render_template('login.html')
 
 @bp.route('/logout')
 def logout():
     db.setUser("")
-    return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="true", login="false")
+    return render_template('index.html', user=db.getUser(), logout="true", login="false")
 
 @bp.route('/register', methods=["POST","GET"])
 def register():
@@ -41,7 +49,7 @@ def register():
         usr = db.regUser(fname, lname, email, pswd)
         if usr == "email already in use":
             return render_template('register.html', error=usr)
-        return render_template('index.html', posts=db.allPosts(), user=db.getUser(), logout="false", login="true")
+        return render_template('index.html', user=db.getUser(), logout="false", login="true")
     return render_template('register.html')
 
 @bp.route('/account')
@@ -68,5 +76,5 @@ def upload(user):
 
 @bp.route('/myposts')
 def myposts():
-    return render_template('myposts.html', posts=DB.userPosts())
+    return render_template('myposts.html')
 

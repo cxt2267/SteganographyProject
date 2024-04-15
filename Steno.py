@@ -57,11 +57,20 @@ def createPost(post_info):
     carr.seek(0)
     msg.seek(0)
 
-    for i, j in zip(range(0, len(carr_bits[stbit:]), per_list[0]), range(len(msg_bits))):
+    counter = 0
+    i = stbit
+    for j in range(len(msg_bits)):
+        if(i >= len(carr_bits)): 
+            break
+        if counter == len(per_list):
+            counter = 0
         carr_bits[i] = msg_bits[j]
-
-    if(j < len(msg_bits)-1):
-        return "insufficient carrier size"
+        i += per_list[counter]
+        counter += 1
+    
+    if not (len(msg_bits) == 0):
+        if(j < len(msg_bits)-1):
+            return "insufficient carrier size"
     
     with open(post_name, 'wb+') as post:
         carr_bits.tofile(post)
@@ -78,7 +87,6 @@ def createPost(post_info):
         db.addPost(post_info)
 
     os.remove(post_name)
-        #add to DB
     return "success"
 
 

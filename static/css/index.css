@@ -1,0 +1,35 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav {
+    margin-bottom: 45px;
+    top: 0px;
+    position: fixed;
+    min-width: 100%;
+    z-index: 1000;
+}
+
+.container {
+    top: 100px;
+    position: relative;
+    min-width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#posts {
+    max-width: 90%;
+}
+
+td {
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 250px;
+}
+
+

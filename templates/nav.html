@@ -15,18 +15,18 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+            <a class="nav-link" id="home" href="/">All Posts <span class="sr-only"></span></a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" id="upload" href="#">Upload</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/myposts">My Posts</a>
+          <li class="nav-item active">
+            <a class="nav-link" id="my-posts" href="#">My Posts</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/account">Account</a>
+          <li class="nav-item active">
+            <a class="nav-link" id="account" href="#">Account</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" id="login-out" href="#"></a>
           </li>
         </ul>
@@ -47,6 +47,8 @@
               document.getElementById("login-out").href = "/logout";
               document.getElementById("login-out").innerHTML = "Logout";
               document.getElementById("upload").href = "/upload/" + user.UserID;
+              document.getElementById("my-posts").href = "/myposts";
+              document.getElementById("account").href = "/account";
             }
             else if(localStorage.getItem("user") === null) {
               document.getElementById("user_name").innerHTML = "";

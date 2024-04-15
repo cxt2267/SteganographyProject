@@ -1,6 +1,6 @@
 import dropbox
 
-acc_tok = 'sl.BzF6R4Jl5RVDNn_12PKzubY-qeXXpKOAGFfwwhj4J3yTK43cXaeY3jAgkv3qeJPhkGh7s4iD5pjz-_gmyUpvRFDmuR7Ac2YLkm2O4762wzBVrfnRnqJGCdgfAZpxU4qde7XE7CwIH2p6QFk'
+acc_tok = 'sl.Bza84j4xvnFMdG-qWeKZdJePnawscRN3Dd5Ntl_DT3s8-6LPf_ypo6SGURc4gpFTLiSMpDkw79Fnh822FWBkHwTcc4bqroMeprrQVqTNoPSbe0tdIAxVoLIzfEulvqaxAER3jO95eK1N-FE'
 dbx = dropbox.Dropbox(acc_tok)
 
 def createUserFold(id):

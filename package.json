@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "dropbox": "^10.34.0"
   }
 }

@@ -106,14 +106,13 @@ class DB:
         values = [user]
         curs.execute(stmt, values)
         posts = curs.fetchall()
-        postnames = []
+        post_paths = []
         for post in posts:
-            #ext_ind = post[2].rfind('.')
-            #ext = post[2][ext_ind:]
-            #postfile = post[1] + ext
-            postnames.append(post[1])
+            ext_ind = post[2].rfind('.')
+            ext = post[2][ext_ind:]
+            post_paths.append(f"/user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
-        return postnames
+        return post_paths
 
     def allPosts(self):
         con = self.conn()
@@ -121,12 +120,13 @@ class DB:
         stmt = "select * from Posts"
         curs.execute(stmt)
         posts = curs.fetchall()
-        postfiles = []
+        post_paths = []
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            postfile = post[1] + ext
+            post_paths.append(f"/user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
+        return post_paths
     
     def getPost(self, post_name):
         con = self.conn()
