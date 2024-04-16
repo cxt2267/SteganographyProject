@@ -20,6 +20,7 @@ body {
     min-width: 100%;
     position: fixed;
     margin-bottom: 20px;
+    z-index: 1000;
 }
 
 .input-box {
@@ -33,7 +34,7 @@ body {
     background-color: rgb(32, 32, 32);
     padding: 30px 40px;
     position: relative;
-    margin-top: 45px;
+    top: 45px;
 }
 
 .input-box h1 {

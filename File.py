@@ -1,7 +1,8 @@
 import dropbox
 
-acc_tok = 'sl.Bza84j4xvnFMdG-qWeKZdJePnawscRN3Dd5Ntl_DT3s8-6LPf_ypo6SGURc4gpFTLiSMpDkw79Fnh822FWBkHwTcc4bqroMeprrQVqTNoPSbe0tdIAxVoLIzfEulvqaxAER3jO95eK1N-FE'
-dbx = dropbox.Dropbox(acc_tok)
+acc_tok = 'sl.BzZzl_bYeGEuIDHSWXrkPAtt0KvOqMAj0HeLHqGL0IbLbbQIBjyc1Pj23Af7YjZ7zzDrCLfMdHUhgPA10GkSwEHJCp-TH37lv7U7yAbmPyXSfInFtF_FG90nEaO80DYo9spZb0nfkN4_UAU'
+app_key = 'sdxgad35qwnhtkc'
+dbx = dropbox.Dropbox(acc_tok, app_key)
 
 def createUserFold(id):
     dbx.files_create_folder_v2(f"/user_{id}")
