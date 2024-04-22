@@ -48,14 +48,17 @@ def createPost(post_info):
     if((mode == 2) and (len(per_list) == 1)):
         return "invalid mode and periodicity"
 
+    carr_bits_orig = bitarray()
+    msg_bits_orig = bitarray()
     carr_bits = bitarray()
     msg_bits = bitarray()
 
+    carr_bits_orig.fromfile(carr)
+    carr.seek(0)
+    msg_bits_orig.fromfile(msg)
+    msg.seek(0)
     carr_bits.fromfile(carr)
     msg_bits.fromfile(msg) 
-
-    carr.seek(0)
-    msg.seek(0)
 
     counter = 0
     i = stbit
@@ -67,26 +70,36 @@ def createPost(post_info):
         carr_bits[i] = msg_bits[j]
         i += per_list[counter]
         counter += 1
-    
+
     if not (len(msg_bits) == 0):
         if(j < len(msg_bits)-1):
             return "insufficient carrier size"
     
-    with open(post_name, 'wb+') as post:
+    carr_name = carr.filename
+    ext_ind = carr_name.rfind('.')
+    ext = carr_name[ext_ind:]
+
+    os.makedirs(f"static/images/user_{user}/{post_name}")
+
+    with open(f"static/images/user_{user}/{post_name}/{post_name}{ext}", 'wb+') as post:
         carr_bits.tofile(post)
-        post.seek(0)
+        print(len(carr_bits))
         post_info = {
-            "post": post,
+            "post": post_name,
             "carrier": carr,
             "message": msg,
             "stbit": stbit,
             "per": per,
             "user": user
         }
-        File.savePost(post_info)
         db.addPost(post_info)
+    
+    with open(f"static/images/user_{user}/{post_name}/{carr.filename}", 'wb+') as carr_file:
+        carr_bits_orig.tofile(carr_file)
 
-    os.remove(post_name)
+    with open(f"static/images/user_{user}/{post_name}/{msg.filename}", 'wb+') as msg_file:
+        msg_bits_orig.tofile(msg_file)
+
     return "success"
 
 

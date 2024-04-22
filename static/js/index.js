@@ -1,7 +1,3 @@
-const acc_tok = 'sl.BzZzl_bYeGEuIDHSWXrkPAtt0KvOqMAj0HeLHqGL0IbLbbQIBjyc1Pj23Af7YjZ7zzDrCLfMdHUhgPA10GkSwEHJCp-TH37lv7U7yAbmPyXSfInFtF_FG90nEaO80DYo9spZb0nfkN4_UAU';
-const app_key = 'sdxgad35qwnhtkc'
-const dbx = new Dropbox.Dropbox({ accessToken: acc_tok, clientId: app_key});
-
 function checkUser() {
     if(localStorage.getItem("user") === null) {
         window.location.href = "/login";
@@ -13,6 +9,7 @@ function checkUser() {
 
 async function getPost(file_path) {
     const file_name = file_path.match(/\/([^\/]+)$/)[1];
+    console.log(file_path)
     const file_ext = file_name.split('.').pop();
     const img_ext = ['jpeg','jpg','png','gif','svg'];
     var link = document.createElement('a');
@@ -22,14 +19,15 @@ async function getPost(file_path) {
     img.style.width = "290px";
     img.style.height = "240px";
     return new Promise((resolve) => {
-        dbx.filesDownload({ path: file_path })
-        .then((resp) => {
-            const blob = resp.result.fileBlob;//new Blob([resp.result]);
-            const url = window.URL.createObjectURL(blob);
+        fetch(file_path)
+        .then(resp => {
+            return resp.blob();
+        }).then(file_content => {
+            const url = URL.createObjectURL(file_content);
             link.href = url;
             if(img_ext.includes(file_ext)) {
                 const fr = new FileReader();
-                fr.readAsDataURL(blob);
+                fr.readAsDataURL(file_content);
                 fr.onloadend = () => {
                     img.src = fr.result;
                 }
@@ -39,7 +37,7 @@ async function getPost(file_path) {
                 link.innerHTML = file_name;
             }
             resolve(link);
-        });
+        })
     });
 }    
 

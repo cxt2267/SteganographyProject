@@ -1,7 +1,7 @@
 import mysql.connector
 import bcrypt
 import json
-import File
+import os
 
 class DB:
     user_info = ""  
@@ -39,7 +39,7 @@ class DB:
         curs.execute(stmt, values)
         user = curs.fetchall()
         con.close()
-        File.createUserFold(user[0][0])
+        os.makedirs(f"static/images/user_{user[0][0]}")
         user = self.checkUser(email, pswd)
         self.user_info = user
         return self.user_info
@@ -84,7 +84,7 @@ class DB:
         return self.user_info
     
     def addPost(self, post_info):
-        post = post_info["post"].name
+        post = post_info["post"]
         carr = post_info["carrier"].filename
         msg = post_info["message"].filename
         stbit = post_info["stbit"]
@@ -110,7 +110,7 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            post_paths.append(f"/user_{post[6]}/{post[1]}/{post[1]}{ext}")
+            post_paths.append(f"/static/images/user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
         return post_paths
 
@@ -124,7 +124,7 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            post_paths.append(f"/user_{post[6]}/{post[1]}/{post[1]}{ext}")
+            post_paths.append(f"/static/images/user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
         return post_paths
     
