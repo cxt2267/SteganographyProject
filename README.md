@@ -29,5 +29,3 @@ A simple website where users can input two files and hide one within the other u
 - Python (backend)
 - Flask for API functionality 
 
-## Note 
-Planning on using a cloud-based filesystem to store uploaded files in the future.
