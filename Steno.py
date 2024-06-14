@@ -1,4 +1,3 @@
-import File
 import re
 import os
 from DB import DB
@@ -79,9 +78,9 @@ def createPost(post_info):
     ext_ind = carr_name.rfind('.')
     ext = carr_name[ext_ind:]
 
-    os.makedirs(f"static/images/user_{user}/{post_name}")
+    os.makedirs(f"/mnt/efs/user_{user}/{post_name}")
 
-    with open(f"static/images/user_{user}/{post_name}/{post_name}{ext}", 'wb+') as post:
+    with open(f"/mnt/efs/user_{user}/{post_name}/{post_name}{ext}", 'wb+') as post:
         carr_bits.tofile(post)
         print(len(carr_bits))
         post_info = {
@@ -94,10 +93,10 @@ def createPost(post_info):
         }
         db.addPost(post_info)
     
-    with open(f"static/images/user_{user}/{post_name}/{carr.filename}", 'wb+') as carr_file:
+    with open(f"/mnt/efs/user_{user}/{post_name}/{carr.filename}", 'wb+') as carr_file:
         carr_bits_orig.tofile(carr_file)
 
-    with open(f"static/images/user_{user}/{post_name}/{msg.filename}", 'wb+') as msg_file:
+    with open(f"/mnt/efs/user_{user}/{post_name}/{msg.filename}", 'wb+') as msg_file:
         msg_bits_orig.tofile(msg_file)
 
     return "success"

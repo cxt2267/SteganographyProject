@@ -17,7 +17,7 @@ class DB:
             host = "stega-proj.cfs6c6cwccjc.us-east-1.rds.amazonaws.com",
             user = "admin",
             password = "cse4381Stega",
-            database = "StegaProj"
+            database = "StegaProject"
         )
         if con.is_connected():
             return con
@@ -39,7 +39,7 @@ class DB:
         curs.execute(stmt, values)
         user = curs.fetchall()
         con.close()
-        os.makedirs(f"static/images/user_{user[0][0]}")
+        os.makedirs(f"/mnt/efs/user_{user[0][0]}")
         user = self.checkUser(email, pswd)
         self.user_info = user
         return self.user_info
@@ -110,7 +110,7 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            post_paths.append(f"/static/images/user_{post[6]}/{post[1]}/{post[1]}{ext}")
+            post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
         return post_paths
 
@@ -124,7 +124,7 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            post_paths.append(f"/static/images/user_{post[6]}/{post[1]}/{post[1]}{ext}")
+            post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
         return post_paths
     
@@ -141,5 +141,3 @@ class DB:
         else:
             return post[0]
         
-
-
