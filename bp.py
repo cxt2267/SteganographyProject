@@ -47,7 +47,10 @@ def register():
         email = request.form["email"]
         pswd = request.form["pswd"]
         usr = db.regUser(fname, lname, email, pswd)
-        if usr == "email already in use":
+        if usr == "Email already in use.":
+            return render_template('register.html', error=usr)
+        elif usr == '''Password must contain at least 8 characters, an 
+            uppercase letter, lowercase letter, a digit, and a special character.'''
             return render_template('register.html', error=usr)
         return render_template('index.html', user=db.getUser(), logout="false", login="true")
     return render_template('register.html')

@@ -41,10 +41,10 @@ class DB:
 
     def regUser(self, fname, lname, email, pswd):
         if self.emailExists(email) :
-            return "email already in use"
+            return "Email already in use."
         if not self.checkPass(pswd) :
-            return "Password must contain at least 8 characters, an " 
-            "uppercase letter, lowercase letter, a digit, and a special character."
+            return '''Password must contain at least 8 characters, an 
+            uppercase letter, lowercase letter, a digit, and a special character.'''
         con = self.conn()
         curs = con.cursor()
         stmt = "insert into Users(Fname, Lname, Email, Pswd) values(%s, %s, %s, %s)"
