@@ -23,6 +23,7 @@ jobs:
           DB_INFO: ${{ secrets.DB_INFO }}
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+          sudo systemctl daemon-reload
           cd /home/ec2-user/SteganographyProject
           git pull origin main
           source venv/bin/activate
