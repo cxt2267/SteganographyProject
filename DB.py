@@ -6,7 +6,6 @@ import re
 
 class DB:
     user_info = ""  
-    DB_INFO = json.loads(os.environ.get('DB_INFO'))
 
     def getUser(self):
         return self.user_info
@@ -17,10 +16,6 @@ class DB:
     def conn(self):
         #print(os.getenv('DB_INFO'))
         con = mysql.connector.connect(
-            #host = DB_INFO["host"],
-            #user = DB_INFO["user"],
-            #password = DB_INFO["password"],
-            #database = DB_INFO["database"]
             host = "stega-proj.cfs6c6cwccjc.us-east-1.rds.amazonaws.com",
             user = "admin",
             password = "cse4381Stega",
