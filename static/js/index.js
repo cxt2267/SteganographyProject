@@ -9,7 +9,6 @@ function checkUser() {
 
 async function getPost(file_path) {
     const file_name = file_path.match(/\/([^\/]+)$/)[1];
-    console.log(file_path)
     const file_ext = file_name.split('.').pop();
     const img_ext = ['jpeg','jpg','png','gif','svg'];
     var link = document.createElement('a');
@@ -56,7 +55,6 @@ function getPosts(user) {
       posts.forEach((post, i, list) => {
         getPost(post)
         .then(link => {
-            console.log(link);
             if(columns === 4) {
                 table.append(row);
                 columns = 0;
