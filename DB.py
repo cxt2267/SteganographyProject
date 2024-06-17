@@ -15,7 +15,6 @@ class DB:
         user_info = info
 
     def conn(self):
-        print(DB_INFO)
         con = mysql.connector.connect(
             host = DB_INFO["host"],
             user = DB_INFO["user"],
