@@ -19,6 +19,8 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Update application on EC2
+        env:
+          DB_INFO: ${{ secrets.DB_INFO }}
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
           cd /home/ec2-user/SteganographyProject

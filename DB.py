@@ -2,9 +2,11 @@ import mysql.connector
 import bcrypt
 import json
 import os
+import re
 
 class DB:
     user_info = ""  
+    DB_INFO = os.getenv('DB_INFO')
 
     def getUser(self):
         return self.user_info
@@ -14,20 +16,34 @@ class DB:
 
     def conn(self):
         con = mysql.connector.connect(
-            host = "stega-proj.cfs6c6cwccjc.us-east-1.rds.amazonaws.com",
-            user = "admin",
-            password = "cse4381Stega",
-            database = "StegaProject"
+            DB_INFO
         )
+        print(DB_INFO)
         if con.is_connected():
             return con
 
     def hash(self, pswd):
         return bcrypt.hashpw(pswd.encode('utf-8'),bcrypt.gensalt())
 
+    def checkPass(pswd):
+        if len(pswd) < 8:
+            return False
+        elif not bool(re.search(r'[A-Z]', pswd)):
+            return False
+        elif not bool(re.search(r'[a-z]', pswd)):
+            return False
+        elif not bool(re.search(r'[0-9]', pswd)):
+            return False
+        elif not bool(re.search(r'[^a-zA-Z0-9]', pswd)):
+            return False
+        return True
+
     def regUser(self, fname, lname, email, pswd):
         if self.emailExists(email) :
             return "email already in use"
+        if not self.checkPass(pswd) :
+            return "Password must contain at least 8 characters, an " 
+            "uppercase letter, lowercase letter, a digit, and a special character."
         con = self.conn()
         curs = con.cursor()
         stmt = "insert into Users(Fname, Lname, Email, Pswd) values(%s, %s, %s, %s)"
