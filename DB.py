@@ -14,7 +14,6 @@ class DB:
         user_info = info
 
     def conn(self):
-        #print(os.getenv('DB_INFO'))
         con = mysql.connector.connect(
             host = "stega-proj.cfs6c6cwccjc.us-east-1.rds.amazonaws.com",
             user = "admin",
@@ -27,7 +26,7 @@ class DB:
     def hash(self, pswd):
         return bcrypt.hashpw(pswd.encode('utf-8'),bcrypt.gensalt())
 
-    def checkPass(pswd):
+    def checkPass(self, pswd):
         if len(pswd) < 8:
             return False
         elif not bool(re.search(r'[A-Z]', pswd)):
