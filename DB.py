@@ -6,7 +6,7 @@ import re
 
 class DB:
     user_info = ""  
-    DB_INFO = json.loads(os.getenv('DB_INFO'))
+    DB_INFO = json.loads(os.environ.get('DB_INFO'))
 
     def getUser(self):
         return self.user_info
@@ -15,7 +15,7 @@ class DB:
         user_info = info
 
     def conn(self):
-        print(os.getenv('DB_INFO'))
+        #print(os.getenv('DB_INFO'))
         con = mysql.connector.connect(
             #host = DB_INFO["host"],
             #user = DB_INFO["user"],
