@@ -25,7 +25,6 @@ A simple website where users can input two files and hide one within the other u
   - The application should be open and ready to use.
 
 ## Tools and Frameworks
-- HTML, CSS, JavaScript, Bootstrap (frontend)
-- Python (backend)
-- Flask for API functionality 
+- HTML, CSS, JavaScript, Bootstrap (frontend/user interface)
+- Python (Flask) (backend)
 
