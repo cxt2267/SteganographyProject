@@ -20,11 +20,11 @@ jobs:
 
       - name: Update application on EC2
         env:
-        DB_INFO: ${{ secrets.DB_INFO }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PSWD: ${{ secrets.DB_PSWD }}
-        DB_NAME: ${{ secrets.DB_NAME }}
+          DB_INFO: ${{ secrets.DB_INFO }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PSWD: ${{ secrets.DB_PSWD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
           export DB_HOST=${{ secrets.DB_HOST }} DB_USER=${{ secrets.DB_USER }} DB_PSWD=${{ secrets.DB_PSWD }} DB_NAME=${{ secrets.DB_NAME }}
