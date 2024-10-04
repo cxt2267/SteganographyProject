@@ -3,6 +3,7 @@ from bp import bp
 import DB
 from flask_cors import CORS
 
+
 app = Flask(__name__, static_folder='./static')
 app.register_blueprint(bp)
 
