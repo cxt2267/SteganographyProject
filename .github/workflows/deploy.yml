@@ -20,7 +20,6 @@ jobs:
 
       - name: Update application on EC2
         env:
-          DB_INFO: ${{ secrets.DB_INFO }}
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PSWD: ${{ secrets.DB_PSWD }}
