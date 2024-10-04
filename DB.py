@@ -3,6 +3,8 @@ import bcrypt
 import json
 import os
 import re
+import boto3
+from botocore.exceptions import ClientError
 
 class DB:
     user_info = ""  
@@ -13,12 +15,31 @@ class DB:
     def setUser(self, info):
         user_info = info
 
+    def getDBSecret():
+        secret_name = "StegaProj-DBCred"
+        region_name = "us-east-1"
+
+        session = boto3.session.Session()
+        client = session.client(
+            service_name='secretsmanager',
+            region_name=region_name
+        )
+
+        try:
+            secret_value_resp = client.get_secret_value(
+                SecretId=secret_name
+            )
+            return json.loads(secret_value_resp['SecretString'])
+        except ClientError as e:
+            raise e
+
     def conn(self):
+        dbSecret = getDBSecret()
         con = mysql.connector.connect(
-            host = os.getenv('DB_HOST'),
-            user = os.getenv('DB_USER'),
-            password = os.getenv('DB_PSWD'),
-            database = os.getenv('DB_NAME')
+            host = dbSecret['host'],
+            user = dbSecret['username'],
+            password = dbSecret['password'],
+            database = dbSecret['dbName']
         )
         if con.is_connected():
             return con
