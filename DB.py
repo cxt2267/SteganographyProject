@@ -15,10 +15,10 @@ class DB:
 
     def conn(self):
         con = mysql.connector.connect(
-            host = "stega-proj.cfs6c6cwccjc.us-east-1.rds.amazonaws.com",
-            user = "admin",
-            password = "cse4381Stega",
-            database = "StegaProject"
+            host = os.getenv("DB_HOST"),
+            user = os.getenv("DB_USER"),
+            password = os.getenv("DB_PSWD"),
+            database = os.getenv("DB_NAME")
         )
         if con.is_connected():
             return con
