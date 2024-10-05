@@ -15,34 +15,31 @@ class DB:
     def setUser(self, info):
         user_info = info
 
-    '''
-        def getDBSecret():
-            secret_name = "StegaProj-DBCred"
-            region_name = "us-east-1"
+    def getDBSecret():
+        secret_name = "StegaProj-DBCred"
+        region_name = "us-east-1"
 
-            session = boto3.session.Session()
-            client = session.client(
-                service_name='secretsmanager',
-                region_name=region_name
+        session = boto3.session.Session()
+        client = session.client(
+            service_name='secretsmanager',
+            region_name=region_name
+        )
+
+        try:
+            secret_value_resp = client.get_secret_value(
+                SecretId=secret_name
             )
-
-            try:
-                secret_value_resp = client.get_secret_value(
-                    SecretId=secret_name
-                )
-                return json.loads(secret_value_resp['SecretString'])
-            except ClientError as e:
-                raise e
-
-    '''
+            return json.loads(secret_value_resp['SecretString'])
+        except ClientError as e:
+            raise e
 
     def conn(self):
-        #dbSecret = getDBSecret()
+        dbSecret = getDBSecret()
         con = mysql.connector.connect(
-            host = "steganography-project.cfs6c6cwccjc.us-east-1.rds.amazonaws.com",#dbSecret['host'],
-            user = "admin",#dbSecret['username'],
-            password = "cse4381Stega",#dbSecret['password'],
-            database = "StegaProject"#dbSecret['dbName']
+            host = dbSecret['host'],
+            user = dbSecret['username'],
+            password = dbSecret['password'],
+            database = dbSecret['dbName']
         )
         if con.is_connected():
             return con
