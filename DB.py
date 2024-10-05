@@ -15,7 +15,7 @@ class DB:
     def setUser(self, info):
         user_info = info
 
-    def getDBSecret():
+    def getDBSecret(self):
         secret_name = "StegaProj-DBCred"
         region_name = "us-east-1"
 
@@ -34,7 +34,7 @@ class DB:
             raise e
 
     def conn(self):
-        dbSecret = getDBSecret()
+        dbSecret = self.getDBSecret()
         con = mysql.connector.connect(
             host = dbSecret['host'],
             user = dbSecret['username'],
