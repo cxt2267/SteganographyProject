@@ -15,6 +15,7 @@ class DB:
     def setUser(self, info):
         user_info = info
 
+'''
     def getDBSecret():
         secret_name = "StegaProj-DBCred"
         region_name = "us-east-1"
@@ -33,13 +34,15 @@ class DB:
         except ClientError as e:
             raise e
 
+'''
+
     def conn(self):
-        dbSecret = getDBSecret()
+        #dbSecret = getDBSecret()
         con = mysql.connector.connect(
-            host = dbSecret['host'],
-            user = dbSecret['username'],
-            password = dbSecret['password'],
-            database = dbSecret['dbName']
+            host = "steganography-project.cfs6c6cwccjc.us-east-1.rds.amazonaws.com",#dbSecret['host'],
+            user = "admin",#dbSecret['username'],
+            password = "cse4381Stega",#dbSecret['password'],
+            database = "StegaProject"#dbSecret['dbName']
         )
         if con.is_connected():
             return con
