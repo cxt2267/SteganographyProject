@@ -1,4 +1,3 @@
-//import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { S3Client, GetObjectCommand } from "https://cdn.skypack.dev/@aws-sdk/client-s3";
 
 function checkUser() {
@@ -63,7 +62,7 @@ async function getPost(file_path) {
     });
 }    
 
-function getPosts(user) {
+export function getPosts(user) {
     var option = '/all-posts';
     if(user !== null) {
         option = `/my-posts/${user}`;
