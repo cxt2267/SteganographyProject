@@ -22,8 +22,8 @@
     <script src="{{ url_for('static', filename='js/Dropbox-sdk.min.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
     <script type="module">
-        import { getPosts, checkUser } from './static/js/index.js';
-    
+        import { getPosts, checkUser } from "{{ url_for('static', filename='js/index.js') }}";
+
         $(function(){
             var user = checkUser().UserID;
             $("#nav").load("/nav");
