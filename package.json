@@ -3,5 +3,6 @@
     "@aws-sdk/client-s3": "^3.665.0",
     "bootstrap": "^5.3.3",
     "dropbox": "^10.34.0"
-  }
+  },
+  "type": "module"
 }
