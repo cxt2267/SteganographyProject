@@ -10,7 +10,7 @@ export function checkUser() {
 async function getPost(file_path) {
     const file_name = file_path.match(/\/([^\/]+)$/)[1];
     const file_ext = file_name.split('.').pop();
-    const img_ext = ['jpeg','jpg','png','gif','svg'];
+    const img_ext = ['jpeg','jpg','png','gif','svg','webp'];
     var link = document.createElement('a');
     link.download = file_name;
     var img = document.createElement('img');
