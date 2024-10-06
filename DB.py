@@ -77,7 +77,11 @@ class DB:
         curs.execute(stmt, values)
         user = curs.fetchall()
         con.close()
-        os.makedirs(f"/mnt/efs/user_{user[0][0]}")
+        #os.makedirs(f"/mnt/efs/user_{user[0][0]}")
+        #creating directory
+        s3_client = boto3.client('s3')
+        s3_client.put_object(Bucket="stegaprojbucket", Key=(f"user_{user[0][0]}/"))
+
         user = self.checkUser(email, pswd)
         self.user_info = user
         return self.user_info
@@ -148,7 +152,8 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}")
+            #post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}") #edit path
+            post_paths.append(f"user_{post[6]}/{post[1]}/{post[1]}{ext}") 
         con.close()
         return post_paths
 
@@ -162,7 +167,8 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}")
+            #post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}") #edit path
+            post_paths.append(f"user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
         return post_paths
     

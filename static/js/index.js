@@ -1,9 +1,33 @@
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+
 function checkUser() {
     if(localStorage.getItem("user") === null) {
         window.location.href = "/login";
         return
     } else {
         return JSON.parse(localStorage.getItem("user"));
+    }
+}
+
+const s3Client = new S3Client({ region: 'us-east-1' });
+
+async function getFileBlob(file_path) {
+    try {
+        const command = new GetObjectCommand({
+            Bucket: "stegaprojbucket",
+            Key: file_path
+        });
+        
+        const { Body } = await s3Client.send(command);
+
+        const chunks = [];
+        for await (const chunk of Body) {
+            chunks.push(chunk);
+        }
+
+        return new Blob(chunks);
+    } catch (err) {
+        console.error("Error retrieving file from S3: ", err);
     }
 }
 
@@ -18,10 +42,8 @@ async function getPost(file_path) {
     img.style.width = "290px";
     img.style.height = "240px";
     return new Promise((resolve) => {
-        fetch(file_path)
-        .then(resp => {
-            return resp.blob();
-        }).then(file_content => {
+        getFileBlob(file_path)
+        .then(file_content => {
             const url = URL.createObjectURL(file_content);
             link.href = url;
             if(img_ext.includes(file_ext)) {
