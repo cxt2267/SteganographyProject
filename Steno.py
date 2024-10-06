@@ -1,5 +1,6 @@
 import re
 import os
+import boto3
 from DB import DB
 from bitarray import bitarray
 
@@ -78,28 +79,27 @@ def createPost(post_info):
     ext_ind = carr_name.rfind('.')
     ext = carr_name[ext_ind:]
 
-    os.makedirs(f"/mnt/efs/user_{user}/{post_name}")
+    s3_client = boto3.client('s3')
+    s3_client.put_object(Bucket="stegaprojbucket", Key=f"user_{user}/{post_name}/")
 
-    with open(f"/mnt/efs/user_{user}/{post_name}/{post_name}{ext}", 'wb+') as post:
-        carr_bits.tofile(post)
-        print(len(carr_bits))
-        post_info = {
-            "post": post_name,
-            "carrier": carr,
-            "message": msg,
-            "stbit": stbit,
-            "per": per,
-            "user": user
-        }
-        db.addPost(post_info)
+    try:
+        s3_client.put_object(Bucket="stegaprojbucket", Key=f"user_{user}/{post_name}/{post_name}{ext}", Body=carr_bits.tobytes())
+        s3_client.put_object(Bucket="stegaprojbucket", Key=f"user_{user}/{post_name}/{carr.filename}", Body=carr_bits_orig.tobytes())
+        s3_client.put_object(Bucket="stegaprojbucket", Key=f"user_{user}/{post_name}/{msg.filename}", Body=msg_bits_orig.tobytes())
+    except NoCredentialsError:
+        print("Credentials not available.")
+    except Exception as e:
+        print(f"Error writing to file: {e}")
     
-    with open(f"/mnt/efs/user_{user}/{post_name}/{carr.filename}", 'wb+') as carr_file:
-        carr_bits_orig.tofile(carr_file)
+    post_info = {
+        "post": post_name,
+        "carrier": carr,
+        "message": msg,
+        "stbit": stbit,
+        "per": per,
+        "user": user
+    }
 
-    with open(f"/mnt/efs/user_{user}/{post_name}/{msg.filename}", 'wb+') as msg_file:
-        msg_bits_orig.tofile(msg_file)
+    db.addPost(post_info)
 
     return "success"
-
-
-

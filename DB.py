@@ -66,6 +66,7 @@ class DB:
         if not self.checkPass(pswd) :
             return '''Password must contain at least 8 characters, an 
             uppercase letter, lowercase letter, a digit, and a special character.'''
+            
         con = self.conn()
         curs = con.cursor()
         stmt = "insert into Users(Fname, Lname, Email, Pswd) values(%s, %s, %s, %s)"
@@ -77,8 +78,6 @@ class DB:
         curs.execute(stmt, values)
         user = curs.fetchall()
         con.close()
-        #os.makedirs(f"/mnt/efs/user_{user[0][0]}")
-        #creating directory
         s3_client = boto3.client('s3')
         s3_client.put_object(Bucket="stegaprojbucket", Key=(f"user_{user[0][0]}/"))
 
@@ -152,7 +151,6 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            #post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}") #edit path
             post_paths.append(f"user_{post[6]}/{post[1]}/{post[1]}{ext}") 
         con.close()
         return post_paths
@@ -167,7 +165,6 @@ class DB:
         for post in posts:
             ext_ind = post[2].rfind('.')
             ext = post[2][ext_ind:]
-            #post_paths.append(f"/mnt/efs/user_{post[6]}/{post[1]}/{post[1]}{ext}") #edit path
             post_paths.append(f"user_{post[6]}/{post[1]}/{post[1]}{ext}")
         con.close()
         return post_paths
