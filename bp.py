@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, redirect, url_for, request, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify, send_file, make_response
 from DB import DB
 import Steno
+import io
+import boto3
 
 bp = Blueprint('bp',__name__)
 
@@ -81,3 +83,14 @@ def upload(user):
 def myposts():
     return render_template('myposts.html')
 
+@bp.route('/fileblob/<file_path>', methods=['GET'])
+def get_file_blob(file_path):
+    s3_client = boto3.client('s3')
+    s3_resp = s3_client.get_object(Bucket="stegaprojbucket", Key=file_path)
+
+    file_content = s3_resp['Body'].read()
+    file_blob = io.BytesIO(file_content)
+
+    resp = make_response(send_file(file_blob, mimetype='application/octet-stream'))
+    resp.headers["Content-Disposition"] = f"attachment; filename={file_path}"
+    return resp

@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand } from "https://cdn.skypack.dev/@aws-sdk/client-s3";
+//import { S3Client, GetObjectCommand } from "https://cdn.skypack.dev/@aws-sdk/client-s3";
 
 function checkUser() {
     if(localStorage.getItem("user") === null) {
@@ -9,9 +9,9 @@ function checkUser() {
     }
 }
 
-const s3Client = new S3Client({ region: 'us-east-1' });
+//const s3Client = new S3Client({ region: 'us-east-1' });
 
-async function getFileBlob(file_path) {
+/*async function getFileBlob(file_path) {
     try {
         const command = new GetObjectCommand({
             Bucket: "stegaprojbucket",
@@ -29,7 +29,7 @@ async function getFileBlob(file_path) {
     } catch (err) {
         console.error("Error retrieving file from S3: ", err);
     }
-}
+}*/
 
 async function getPost(file_path) {
     const file_name = file_path.match(/\/([^\/]+)$/)[1];
@@ -42,7 +42,8 @@ async function getPost(file_path) {
     img.style.width = "290px";
     img.style.height = "240px";
     return new Promise((resolve) => {
-        getFileBlob(file_path)
+        fetch('/fileblob/' + file_path)
+        .then(resp => resp.blob())
         .then(file_content => {
             const url = URL.createObjectURL(file_content);
             link.href = url;
