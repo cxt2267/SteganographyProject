@@ -1,4 +1,5 @@
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+//import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
 
 function checkUser() {
     if(localStorage.getItem("user") === null) {
@@ -90,4 +91,4 @@ function getPosts(user) {
         }); 
       })
     })
-  }
+}
