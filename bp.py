@@ -83,8 +83,10 @@ def upload(user):
 def myposts():
     return render_template('myposts.html')
 
-@bp.route('/fileblob/<file_path>', methods=['GET'])
-def get_file_blob(file_path):
+@bp.route('/fileblob', methods=['GET'])
+def get_file_blob():
+    file_path = request.args.get('file_path')
+
     s3_client = boto3.client('s3')
     s3_resp = s3_client.get_object(Bucket="stegaprojbucket", Key=file_path)
 

@@ -42,7 +42,7 @@ async function getPost(file_path) {
     img.style.width = "290px";
     img.style.height = "240px";
     return new Promise((resolve) => {
-        fetch('/fileblob/' + file_path)
+        fetch(`/fileblob?file_path=${encodeURIComponent(file_path)}`)
         .then(resp => resp.blob())
         .then(file_content => {
             const url = URL.createObjectURL(file_content);
