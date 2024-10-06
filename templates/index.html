@@ -24,7 +24,9 @@
 
     <!--<script src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="sdxgad35qwnhtkc"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox/11.0.0/Dropbox-sdk.min.js"></script>-->
-    <script>
+    <script type="module">
+      import { getPosts } from './static/js/index.js';
+      
       function loadUser() {
         if("{{logout}}" === "true") {
           localStorage.removeItem("user");
